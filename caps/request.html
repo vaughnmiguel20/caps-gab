@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Submit Request</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <h1>Submit Request</h1>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="request.html">Request</a>
+    <a href="concerns.html">Concerns</a>
+    <a href="admin.html">Admin</a>
+  </nav>
+</header>
+
+<main>
+  <form id="request-form">
+    <input type="text" id="req-name" placeholder="Your Name" required>
+    <select id="req-type" required>
+      <option value="">Select Request Type</option>
+      <option value="Barangay Clearance">Barangay Clearance</option>
+      <option value="ID Request">ID Request</option>
+      <option value="Other">Other</option>
+    </select>
+    <textarea id="req-desc" placeholder="Request Details" rows="4" required></textarea>
+    <button type="submit">Submit Request</button>
+  </form>
+</main>
+
+<script>
+document.getElementById('request-form').addEventListener('submit', function(e){
+  e.preventDefault();
+  const name = document.getElementById('req-name').value;
+  const type = document.getElementById('req-type').value;
+
+  // Add to central requests array
+  requests.push({ id: requests.length + 1, name, type, status: "Pending" });
+
+  alert("Request submitted!");
+  this.reset();
+});
+
+</script>
+
+<script src="script.js"></script>
+</body>
+</html>

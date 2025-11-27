@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Submit Concern</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <h1>Submit Concern</h1>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="request.html">Request</a>
+    <a href="concerns.html">Concerns</a>
+    <a href="admin.html">Admin</a>
+  </nav>
+</header>
+
+<main>
+  <form id="concern-form">
+    <input type="text" id="concern-name" placeholder="Your Name" required>
+    <textarea id="concern-issue" placeholder="Describe your concern" rows="4" required></textarea>
+    <button type="submit">Submit Concern</button>
+  </form>
+
+  <h2>Your Submitted Concerns</h2>
+  <div id="user-concerns"></div>
+</main>
+
+<script>
+document.getElementById('concern-form').addEventListener('submit', function(e){
+  e.preventDefault();
+  const name = document.getElementById('concern-name').value;
+  const issue = document.getElementById('concern-issue').value;
+
+  // Add to central concerns array
+  concerns.push({ id: concerns.length + 1, name, issue, status: "Pending" });
+
+  alert("Concern submitted!");
+  this.reset();
+});
+</script>

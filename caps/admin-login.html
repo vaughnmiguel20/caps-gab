@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Login</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <h1>Admin Login</h1>
+</header>
+
+<main>
+  <form id="login-form">
+    <input type="text" id="admin-username" placeholder="Username" required>
+    <input type="password" id="admin-password" placeholder="Password" required>
+    <button type="submit">Login</button>
+  </form>
+</main>
+
+<script>
+const ADMIN_USERNAME = "admin";
+const ADMIN_PASSWORD = "1234"; // You can change this password
+
+document.getElementById('login-form').addEventListener('submit', function(e){
+  e.preventDefault();
+  const username = document.getElementById('admin-username').value;
+  const password = document.getElementById('admin-password').value;
+
+  if(username === ADMIN_USERNAME && password === ADMIN_PASSWORD){
+    alert("Login successful!");
+    window.location.href = "admin.html"; // Redirect to admin dashboard
+  } else {
+    alert("Incorrect username or password.");
+    this.reset();
+  }
+});
+</script>
+</body>
+</html>

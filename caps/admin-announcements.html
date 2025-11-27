@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin - Announcements Management</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <h1>Announcements Management</h1>
+  <nav>
+    <a href="admin.html">Dashboard</a>
+    <a href="admin-requests.html">Requests</a>
+    <a href="admin-concerns.html">Concerns</a>
+    <a href="admin-announcements.html">Announcements</a>
+  </nav>
+</header>
+
+<main>
+  <h2>Add New Announcement</h2>
+  <form id="announcement-form">
+    <input type="text" id="announcement-title" placeholder="Title" required>
+    <textarea id="announcement-content" placeholder="Content" rows="4" required></textarea>
+    <button type="submit">Add Announcement</button>
+  </form>
+
+  <h2>All Announcements</h2>
+  <div id="announcements-list">
+    <!-- JS will populate announcements here -->
+  </div>
+</main>
+
+<script>
+document.getElementById('announcement-form').addEventListener('submit', function(e){
+  e.preventDefault();
+  const title = document.getElementById('announcement-title').value;
+  const content = document.getElementById('announcement-content').value;
+
+  // Add to central announcements array
+  announcements.push({ title, content });
+
+  renderAdminAnnouncements();  // Show in admin page
+  alert("Announcement added!");
+  this.reset();
+});
+
+</script>
+
+<script src="script.js"></script>
+</body>
+</html>

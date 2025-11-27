@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Barangay UCAB Portal</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <h1>Barangay UCAB Portal</h1>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="request.html">Request</a>
+    <a href="concerns.html">Concerns</a>
+    <a href="admin.html">Admin</a>
+  </nav>
+</header>
+
+<main>
+  <h2>Announcements</h2>
+  <div id="announcements"></div>
+</main>
+<script>
+  function renderAnnouncements() {
+  const container = document.getElementById('announcements');
+  container.innerHTML = '';
+  announcements.forEach(a => {
+    const div = document.createElement('div');
+    div.className = 'card';
+    div.innerHTML = `<h3>${a.title}</h3><p>${a.content}</p>`;
+    container.appendChild(div);
+  });
+}
+
+// Call on page load
+document.addEventListener('DOMContentLoaded', () => {
+  renderAnnouncements();
+});
+
+</script>
+
+<script src="script.js"></script>
+</body>
+</html>

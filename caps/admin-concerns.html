@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin - Concerns Management</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <h1>Concerns Management</h1>
+  <nav>
+    <a href="admin.html">Dashboard</a>
+    <a href="admin-requests.html">Requests</a>
+    <a href="admin-concerns.html">Concerns</a>
+    <a href="admin-announcements.html">Announcements</a>
+  </nav>
+</header>
+
+<main>
+  <h2>All Concerns</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Issue</th>
+        <th>Status</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody id="concerns-table">
+      <!-- JS will populate this table -->
+    </tbody>
+  </table>
+</main>
+
+<script>
+function renderConcernsTable() {
+  const container = document.getElementById('concerns-table');
+  container.innerHTML = '';
+  concerns.forEach(c => {
+    const row = document.createElement('tr');
+    row.innerHTML = `
+      <td>${c.id}</td>
+      <td>${c.name}</td>
+      <td>${c.issue}</td>
+      <td>${c.status}</td>
+      <td>
+        <button class="action resolve" onclick="resolveConcern(${c.id})">Resolve</button>
+        <button class="action delete" onclick="deleteConcern(${c.id})">Delete</button>
+      </td>
+    `;
+    container.appendChild(row);
+  });
+}
+
+</script>
+
+<script src="script.js"></script>
+</body>
+</html>
