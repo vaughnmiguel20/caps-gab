@@ -1,51 +1,107 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Submit Request</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Submit Request — Barangay UCAB</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-<header>
-  <h1>Submit Request</h1>
-  <nav>
-    <a href="index.html">Home</a>
-    <a href="request.html">Request</a>
-    <a href="concerns.html">Concerns</a>
-    <a href="admin.html">Admin</a>
-  </nav>
-</header>
+  <header class="site-header">
+    <div class="brand">Barangay UCAB</div>
+    <nav class="main-nav">
+      <a href="index.html">Home</a>
+      <a href="request.html" class="active">Request</a>
+      <a href="concerns.html">Concerns</a>
+      <a href="admin-login.html">Admin</a>
+    </nav>
+  </header>
 
-<main>
-  <form id="request-form">
-    <input type="text" id="req-name" placeholder="Your Name" required>
-    <select id="req-type" required>
-      <option value="">Select Request Type</option>
-      <option value="Barangay Clearance">Barangay Clearance</option>
-      <option value="ID Request">ID Request</option>
-      <option value="Other">Other</option>
-    </select>
-    <textarea id="req-desc" placeholder="Request Details" rows="4" required></textarea>
-    <button type="submit">Submit Request</button>
-  </form>
-</main>
+  <main class="container">
+    <section class="panel">
+      <h2>Submit a Request</h2>
+      <form id="request-form" class="form">
+        <label>
+          Your name
+          <input type="text" id="req-name" required />
+        </label>
 
-<script>
-document.getElementById('request-form').addEventListener('submit', function(e){
-  e.preventDefault();
-  const name = document.getElementById('req-name').value;
-  const type = document.getElementById('req-type').value;
+        <label>
+          Request type
+          <select id="req-type" required>
+            <option value="">Select request type</option>
+            <option>Barangay Clearance</option>
+            <option>ID Request</option>
+            <option>Certificate of Indigency</option>
+            <option>Other</option>
+          </select>
+        </label>
 
-  // Add to central requests array
-  requests.push({ id: requests.length + 1, name, type, status: "Pending" });
+        <label>
+          Details
+          <textarea id="req-desc" rows="4" placeholder="Optional details"></textarea>
+        </label>
 
-  alert("Request submitted!");
-  this.reset();
-});
+        <div class="form-actions">
+          <button type="submit" class="btn">Submit Request</button>
+          <button type="button" id="clear-requests" class="btn ghost">Clear All (admin only)</button>
+        </div>
+      </form>
+    </section>
 
-</script>
+    <section class="panel">
+      <h2>Submitted Requests</h2>
+      <table id="requests-table" class="table">
+        <thead>
+          <tr><th>ID</th><th>Name</th><th>Type</th><th>Status</th><th>Action</th></tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </section>
+  </main>
 
-<script src="script.js"></script>
+  <script src="script.js"></script>
+  <script>
+    // Wire form to central functions
+    document.getElementById('request-form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const name = document.getElementById('req-name').value.trim();
+      const type = document.getElementById('req-type').value;
+      const desc = document.getElementById('req-desc').value.trim();
+      if (!name || !type) return alert('Please enter name and request type.');
+      addRequest(name, type, desc);
+      document.getElementById('request-form').reset();
+    });
+
+    // optional: clear (for demonstration only; remove in production)
+    document.getElementById('clear-requests').addEventListener('click', () => {
+      if (confirm('Clear all requests? This is for demo/admin use.')) {
+        clearAllRequests();
+      }
+    });
+
+    <div class="chatbot-fab" id="chatbotOpenBtn">
+    <!-- Gradient SVG icon -->
+    <svg viewBox="0 0 24 24">
+      <path d="M12 3C6.48 3 2 6.86 2 11.5c0 2.49 1.29 4.72 3.41 6.26-.11.95-.49 2.62-1.39 4.07 0 0 2.03-.3 4.11-1.76 1.22.33 2.52.51 3.87.51 5.52 0 10-3.86 10-8.5S17.52 3 12 3z"/>
+    </svg>
+  </div>
+
+  <!-- Chatbot Panel -->
+  <div class="chatbot-panel" id="chatbotPanel">
+    <div class="header">
+      <div class="title">Barangay UCAB Chatbot</div>
+      <button class="close" id="chatbotCloseBtn">✕</button>
+    </div>
+
+    <div class="messages" id="chatMessages"></div>
+
+    <div class="composer">
+      <input id="chatInput" type="text" placeholder="Type a message..." />
+      <button id="chatSendBtn">Send</button>
+    </div>
+  </div>
+  
+  </script>
 </body>
 </html>
