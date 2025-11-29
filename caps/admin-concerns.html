@@ -1,62 +1,86 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Admin - Concerns Management</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin — Concerns</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
+
 <body>
-<header>
-  <h1>Concerns Management</h1>
-  <nav>
-    <a href="admin.html">Dashboard</a>
-    <a href="admin-requests.html">Requests</a>
-    <a href="admin-concerns.html">Concerns</a>
-    <a href="admin-announcements.html">Announcements</a>
-  </nav>
-</header>
+  <header class="site-header">
+    <div class="brand">Admin — Concerns</div>
 
-<main>
-  <h2>All Concerns</h2>
-  <table>
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>Name</th>
-        <th>Issue</th>
-        <th>Status</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
-    <tbody id="concerns-table">
-      <!-- JS will populate this table -->
-    </tbody>
-  </table>
-</main>
+    <nav class="main-nav">
+      <a href="admin.html">Dashboard</a>
+      <a href="admin-requests.html">Requests</a>
+      <a href="admin-concerns.html" class="active">Concerns</a>
+      <a href="admin-announcements.html">Announcements</a>
+    </nav>
 
-<script>
-function renderConcernsTable() {
-  const container = document.getElementById('concerns-table');
-  container.innerHTML = '';
-  concerns.forEach(c => {
-    const row = document.createElement('tr');
-    row.innerHTML = `
-      <td>${c.id}</td>
-      <td>${c.name}</td>
-      <td>${c.issue}</td>
-      <td>${c.status}</td>
-      <td>
-        <button class="action resolve" onclick="resolveConcern(${c.id})">Resolve</button>
-        <button class="action delete" onclick="deleteConcern(${c.id})">Delete</button>
-      </td>
-    `;
-    container.appendChild(row);
-  });
-}
+    <div style="display:flex;align-items:center;gap:10px;margin-left:auto;">
+      <span style="color:#fff;font-weight:600;">Signed in: Barangay Admin</span>
+      <button class="btn ghost" onclick="adminLogout()">Logout</button>
+    </div>
+  </header>
 
-</script>
+  <main class="container">
 
-<script src="script.js"></script>
+    <!-- SEARCH + FILTER BAR -->
+    <section class="panel">
+      <h2>Manage Concerns</h2>
+
+      <div style="display:flex;gap:10px;margin-bottom:15px;">
+        <input 
+          id="concern-search" 
+          type="text"
+          placeholder="Search by name or issue..."
+          style="flex:1;padding:10px;border-radius:8px;border:1px solid #d2d6de;"
+        >
+
+        <select 
+          id="concern-filter"
+          style="padding:10px;border-radius:8px;border:1px solid #d2d6de;"
+        >
+          <option value="all">All</option>
+          <option value="Pending">Pending</option>
+          <option value="Resolved">Resolved</option>
+        </select>
+      </div>
+
+      <table class="table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Issue</th>
+            <th>Status</th>
+            <th>Updated</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+
+        <tbody id="concerns-table"></tbody>
+      </table>
+    </section>
+  </main>
+
+  <!-- CORRECT ORDER OF SCRIPTS -->
+  <script src="script.js"></script>
+
+  <script>
+    // FIX: run requireAdmin AFTER script.js is loaded
+    document.addEventListener("DOMContentLoaded", () => {
+      requireAdmin();               // now works
+      renderConcernsTable();
+
+      document.getElementById("concern-search")
+        .addEventListener("input", renderConcernsTable);
+
+      document.getElementById("concern-filter")
+        .addEventListener("change", renderConcernsTable);
+    });
+  </script>
+
 </body>
 </html>
