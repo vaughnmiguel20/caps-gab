@@ -1,52 +1,63 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Admin - Announcements Management</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Admin Announcements</title>
+  <link rel="stylesheet" href="admin-style.css" />
 </head>
-<body>
-<header>
-  <h1>Announcements Management</h1>
-  <nav>
-    <a href="admin.html">Dashboard</a>
-    <a href="admin-requests.html">Requests</a>
-    <a href="admin-concerns.html">Concerns</a>
-    <a href="admin-announcements.html">Announcements</a>
-  </nav>
-</header>
+<body data-theme="school">
+  <aside class="sidebar">
+    <div class="brand"><div class="logo">UC</div><div><h3>Barangay UCAB</h3></div></div>
+    <nav class="nav">
+      <div class="item" onclick="location.href='admin-dashboard.html'">Dashboard</div>
+      <div class="item" onclick="location.href='admin-requests.html'">Requests</div>
+      <div class="item" onclick="location.href='admin-announcements.html'">Announcements</div>
+    </nav>
+  </aside>
 
-<main>
-  <h2>Add New Announcement</h2>
-  <form id="announcement-form">
-    <input type="text" id="announcement-title" placeholder="Title" required>
-    <textarea id="announcement-content" placeholder="Content" rows="4" required></textarea>
-    <button type="submit">Add Announcement</button>
-  </form>
+  <div class="main">
+    <header class="header"><div class="title">Announcements</div><div class="controls"></div></header>
+    <div class="container">
+      <section class="hero"><h2>Create Announcement</h2></section>
 
-  <h2>All Announcements</h2>
-  <div id="announcements-list">
-    <!-- JS will populate announcements here -->
+      <div class="panel" style="background:var(--card-bg);padding:18px;border-radius:12px;box-shadow:var(--card-shadow)">
+        <form id="announcement-form">
+          <label>Title<input id="ann-title" required style="width:100%;padding:10px;margin-top:8px;border-radius:8px;border:1px solid #e6e9ef"></label>
+          <label style="display:block;margin-top:12px">Content<textarea id="ann-content" required style="width:100%;padding:10px;margin-top:8px;border-radius:8px;border:1px solid #e6e9ef"></textarea></label>
+          <div style="margin-top:12px"><button class="btn view" type="submit">Publish</button></div>
+        </form>
+      </div>
+
+      <div style="height:18px"></div>
+
+      <div class="table-card">
+        <div class="table-header">
+          <div>Title</div><div>Content</div><div>Created</div><div>Controls</div>
+        </div>
+        <div class="table-body">
+          <div style="padding:12px 18px"><table style="width:100%"><tbody id="announcements-list"></tbody></table></div>
+        </div>
+      </div>
+
+    </div>
   </div>
-</main>
 
-<script>
-document.getElementById('announcement-form').addEventListener('submit', function(e){
-  e.preventDefault();
-  const title = document.getElementById('announcement-title').value;
-  const content = document.getElementById('announcement-content').value;
-
-  // Add to central announcements array
-  announcements.push({ title, content });
-
-  renderAdminAnnouncements();  // Show in admin page
-  alert("Announcement added!");
-  this.reset();
-});
-
-</script>
-
-<script src="script.js"></script>
+  <script src="script.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      if (typeof requireAdmin === 'function') requireAdmin();
+      if (typeof renderAdminAnnouncements === 'function') renderAdminAnnouncements();
+      const form = document.getElementById('announcement-form');
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const t = document.getElementById('ann-title').value.trim();
+        const c = document.getElementById('ann-content').value.trim();
+        if (!t || !c) return alert('Provide title and content');
+        if (typeof addAnnouncement === 'function') addAnnouncement(t,c);
+        form.reset();
+      });
+    });
+  </script>
 </body>
 </html>
