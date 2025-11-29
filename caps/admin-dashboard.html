@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Admin Dashboard — Barangay UCAB</title>
+  <link rel="stylesheet" href="admin-style.css" />
+</head>
+<body data-theme="school"> <!-- change data-theme to barangay | hybrid | custom -->
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="logo">UC</div>
+      <div>
+        <h3>Barangay UCAB</h3>
+        <div style="font-size:0.82rem;opacity:0.9">Admin Portal</div>
+      </div>
+    </div>
+
+    <nav class="nav">
+      <div class="item" onclick="location.href='admin-requests.html'"><span class="label">Manage Requests</span></div>
+      <div class="item" onclick="location.href='admin-concerns.html'"><span class="label">Manage Concerns</span></div>
+      <div class="item" onclick="location.href='admin-announcements.html'"><span class="label">Announcements</span></div>
+      <div class="item" onclick="location.href='admin-dashboard.html'"><span class="label">Archive</span></div>
+    </nav>
+
+    <div style="position:absolute;left:20px;bottom:28px;color:rgba(255,255,255,0.9);font-size:0.9rem">
+      <div style="font-weight:700">Barangay UCAB</div>
+      <div style="opacity:0.85;font-size:0.85rem">Logged in as: <span id="admin-greeting">Administrator</span></div>
+    </div>
+  </aside>
+
+  <!-- Main -->
+  <div class="main">
+    <header class="header">
+      <div class="title">Enrollment Management Dashboard</div>
+      <div class="controls">
+        <select id="theme-switch">
+          <option value="barangay">Barangay (Green)</option>
+          <option value="hybrid">Hybrid</option>
+          <option value="custom">Custom</option>
+        </select>
+        <button class="btn ghost" id="logout-btn">Logout</button>
+      </div>
+    </header>
+
+    <div class="container">
+
+      <div class="stats">
+        <div class="stat-card">
+          <h3>Total Request</h3>
+          <div class="num" id="total-requests">0</div>
+        </div>
+        <div class="stat-card">
+          <h3>Approved</h3>
+          <div class="num" id="total-approved">0</div>
+        </div>
+        <div class="stat-card">
+          <h3>Declined</h3>
+          <div class="num" id="total-assigned">0</div>
+        </div>
+      </div>
+
+
+        <div class="table-body" id="table-body">
+          <!-- script.js will render rows into #admin-requests-table (below) -->
+          <div style="padding:12px 18px">
+            <table style="width:100%">
+              <thead style="display:none"></thead>
+              <tbody id="admin-requests-table"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+    </div> <!-- container -->
+  </div> <!-- main -->
+
+  <div class="fab" title="Add"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+
+  <!-- use your existing script.js (must include renderRequestsTable etc.) -->
+  <script src="script.js"></script>
+
+  <script>
+    // small UI wiring that doesn't conflict with your code
+    document.addEventListener('DOMContentLoaded', () => {
+      // require admin session
+      if (typeof requireAdmin === 'function') requireAdmin();
+
+      // theme switcher
+      const switchEl = document.getElementById('theme-switch');
+      switchEl.value = document.body.getAttribute('data-theme') || 'school';
+      switchEl.addEventListener('change', (e) => {
+        document.body.setAttribute('data-theme', e.target.value);
+      });
+
+      // logout
+      document.getElementById('logout-btn').addEventListener('click', () => {
+        if (typeof adminLogout === 'function') { adminLogout(); }
+        else location.href = 'admin-login.html';
+      });
+
+      // render admin data using your existing functions
+      if (typeof renderRequestsTable === 'function') renderRequestsTable();
+      if (typeof renderAdminDashboard === 'function') renderAdminDashboard();
+
+      // show admin name
+      if (typeof currentAdminName === 'function') {
+        const n = currentAdminName();
+        if (n) document.getElementById('admin-greeting').textContent = n;
+      }
+
+      // optional: wire search and filters to re-render (if you want)
+      const search = document.getElementById('admin-search');
+      const filter = document.getElementById('filter-grade');
+      search.addEventListener('input', () => {
+        // simple client-side filter (if you want, integrate into renderRequestsTable)
+        const q = search.value.trim().toLowerCase();
+        // fallback to full render (script.js should render into admin-requests-table)
+        if (typeof renderRequestsTable === 'function') renderRequestsTable();
+        // additional custom filtering would need modifications to renderRequestsTable
+      });
+      filter.addEventListener('change', () => {
+        if (typeof renderRequestsTable === 'function') renderRequestsTable();
+      });
+    });
+  </script>
+
+</body>
+</html>

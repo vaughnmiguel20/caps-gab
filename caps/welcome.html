@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Welcome | Barangay UCAB Portal</title>
+
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Inter", Arial, sans-serif;
+    }
+
+    body {
+        height: 100vh;
+        width: 100%;
+        background: url("itogon-2-first-aget-scaled.jpg") center/cover no-repeat;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        animation: fadeIn 1s ease forwards;
+        position: relative;
+    }
+
+    /* Light overlay */
+    body::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: rgba(0,0,0,0.35);
+        backdrop-filter: blur(3px);
+        z-index: 0;
+    }
+
+    .welcome-box {
+        position: relative;
+        z-index: 2;
+        text-align: center;
+        color: white;
+        padding: 40px 60px;
+        background: rgba(255,255,255,0.12);
+        backdrop-filter: blur(6px);
+        border-radius: 18px;
+        box-shadow: 0 12px 40px rgba(0,0,0,0.35);
+        animation: slideUp 0.8s ease;
+    }
+
+    .welcome-box h1 {
+        font-size: 3rem;
+        font-weight: 700;
+        margin-bottom: 25px;
+        text-shadow: 0 4px 10px rgba(0,0,0,0.5);
+    }
+
+    .continue-btn {
+        margin-top: 20px;
+        background: #4CAF50;
+        color: white;
+        border: none;
+        padding: 16px 40px;
+        font-size: 1.4rem;
+        border-radius: 50px;
+        cursor: pointer;
+        transition: 0.3s ease;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+    }
+
+    .continue-btn:hover {
+        background: #3da346;
+        transform: translateY(-3px);
+        box-shadow: 0 12px 26px rgba(0,0,0,0.4);
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+
+    @keyframes slideUp {
+        from { transform: translateY(40px); opacity: 0; }
+        to { transform: translateY(0); opacity: 1; }
+    }
+</style>
+
+</head>
+<body>
+
+<div class="welcome-box">
+    <h1>Welcome to the<br>Barangay UCAB Portal</h1>
+
+    <button class="continue-btn" onclick="location.href='index.html'">
+        Continue
+    </button>
+</div>
+
+</body>
+</html>
