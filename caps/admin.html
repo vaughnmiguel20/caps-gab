@@ -3,24 +3,65 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Admin Dashboard</title>
+  <title>Admin Dashboard — Barangay UCAB</title>
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
-<header>
-  <h1>Barangay UCAB Admin </h1>
-  <nav>
-    <a href="index.html">User Home</a>
-    <a href="admin.html">Dashboard</a>
+<header class="site-header">
+  <div class="brand">Barangay UCAB — Admin Portal</div>
+  <nav class="main-nav">
+    <a href="admin.html" class="active">Dashboard</a>
     <a href="admin-requests.html">Requests</a>
     <a href="admin-concerns.html">Concerns</a>
     <a href="admin-announcements.html">Announcements</a>
-    <a href="admin-login.html">Admin</a>
-
   </nav>
 </header>
 
-<main>
-  <h2>Dashboard Summary</h2>
-  <div class="card">
-    <h3>Total Reques
+<main class="container">
+
+  <section class="panel">
+    <h2>Dashboard Overview</h2>
+    <div class="grid">
+      <div class="card stat">
+        <strong id="total-requests">0</strong>
+        <small>Total Requests</small>
+      </div>
+
+      <div class="card stat">
+        <strong id="total-concerns">0</strong>
+        <small>Total Concerns</small>
+      </div>
+
+      <div class="card stat">
+        <strong id="total-announcements">0</strong>
+        <small>Announcements</small>
+      </div>
+    </div>
+  </section>
+
+  <section class="panel">
+    <h2>Recent Requests</h2>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>ID</th><th>Name</th><th>Type</th><th>Status</th><th>Action Taken</th><th>Updated</th>
+        </tr>
+      </thead>
+      <tbody id="admin-requests-table"></tbody>
+    </table>
+  </section>
+
+</main>
+
+<script src="script.js"></script>
+<script>
+  requireAdmin();  // protect admin page
+  document.addEventListener('DOMContentLoaded', () => {
+    renderRequestsTable();
+    renderAdminDashboard();
+  });
+</script>
+</body>
+</html>
+  
